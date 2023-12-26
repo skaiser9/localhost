@@ -9,10 +9,12 @@
     <table>
         <tr>
             <th>Key Name</th>
+            <th>GTIN Count</th>
         </tr>
         {% for key in keys %}
         <tr>
             <td>{{ key }}</td>
+            <td>{{ gtin_counts[key] }}</td>
         </tr>
         {% endfor %}
     </table>
