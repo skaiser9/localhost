@@ -16,7 +16,7 @@
          {% if key != 'time' %} <!--used to exlcude the time from the key list  -->
         <tr>
             <!--Link the level detials page-->
-            <td><a href="{{url_for('level_route', level=key)}}">{{ key }}</td>
+            <td><a href="{{url_for('level_route', level=key)}}">Level:{{ key }}</td>
             <td>{{ gtin_counts[key] }}</td>
         </tr>
         {% endif %}

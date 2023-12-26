@@ -20,8 +20,15 @@ def loadDf(data):
     df = pd.concat(dfs, ignore_index=True)
     return df
 
+def levelDetails(df,level):
+
+    #print a dataframe with the details of the level 
+    df_level = df.loc[df['level'] == level]
+    level_data = df_level.to_dict('records')
+    return level_data
 
 data = load_Json()
 df = loadDf(data)
+detail = levelDetails(df,'1')
 
-print(df)
+print(detail)
