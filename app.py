@@ -12,14 +12,15 @@ def load_Json():
 def loadDf(data):
     df = pd.DataFrame(data)
     return df
-
 def calculate_gtin_counts(df):
     gtin_counts = {}
     for column in df.columns:
-        # Count non-empty 'GTIN' entries for each item in the list in each row
-        count = sum(1 for row in df[column] for item in row if item.get('GTIN', '') != '')
+        # Count non-empty 'GTIN' entries in each column
+        count = sum(1 for item in df[column] if item.get('GTIN', '') != '')
         gtin_counts[column] = count
     return gtin_counts
+
+
 
 
 
@@ -30,6 +31,7 @@ def home():
     keys = df.columns.tolist()
 
     gtin_counts = calculate_gtin_counts(df)
+    print(gtin_counts)
     return render_template('index.html', keys=keys,gtin_counts=gtin_counts)
 
 if __name__ == '__main__':
