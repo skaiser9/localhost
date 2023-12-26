@@ -11,3 +11,22 @@ td, th {
     text-align: left;
     padding: 8px;
 }
+
+.home-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #007bff; /* Primary blue color */
+    color: white; /* White text */
+    text-align: center;
+    text-decoration: none; /* Removes underline from links */
+    font-size: 16px; /* Set font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.home-button:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+}

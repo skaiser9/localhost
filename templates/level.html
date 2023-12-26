@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Level Details</title>
+    <h2><a href="/" class="home-button">Home</a></h2>
+</head>
+<body>
+    <script>
+        var level = "{{ level_route }}";
+        var number = level.replace(/\D/g, "");
+        document.write("<h1>Details for Level: " + number + "</h1>");
+    </script>
+    <!-- Add the specific details or data for the level here -->
+    
+</body>
+</html>

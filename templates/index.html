@@ -6,16 +6,20 @@
 </head>
 <body>
     <h1>Data Frame Keys</h1>
+    <h2>Json data collected: {{ time }}</h2>
     <table>
         <tr>
             <th>Key Name</th>
-            <th>GTIN Count</th>
+            <th>Full shelfs</th>
         </tr>
         {% for key in keys %}
+         {% if key != 'time' %} <!--used to exlcude the time from the key list  -->
         <tr>
-            <td>{{ key }}</td>
+            <!--Link the level detials page-->
+            <td><a href="{{url_for('level_route', level=key)}}">{{ key }}</td>
             <td>{{ gtin_counts[key] }}</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
 </body>
