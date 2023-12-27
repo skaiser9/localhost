@@ -1,10 +1,29 @@
 from flask import Flask, render_template
 import json
 import pandas as pd 
-
+import csv 
 app = Flask(__name__)
 
 
+csv_file = 'data/GTIN.csv'
+
+def create_dict(csv_file):
+    gtin_part = {}
+    with open(csv_file, newline ='', encoding ='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            part,gtin  = row
+            gtin_part[gtin] = part
+    return gtin_part
+
+dict = create_dict(csv_file)
+
+def get_part(gtin):
+    return dict.get(gtin,"No part found")
+
+gtin = "10715001001198"
+part = get_part(gtin)
+print(part)
 
 
 def load_Json():
@@ -44,7 +63,9 @@ def levelDetails(level):
 def partsInLevel(level):
     level = str(level)
     df_level = df.loc[(df['level'] == level) & (df['GTIN'] != ""), 'GTIN'].unique().tolist()
-    return df_level 
+    parts = [get_part(gtin) for gtin in df_level]  # Convert GTINs to Part codes
+    return parts
+
 
 def calculate_gtin_counts(df):
     gtin_counts = {}
@@ -61,7 +82,14 @@ def level_unique_values(df,level):
     unique_values = df.loc[df['level'] == level, 'GTIN'].unique().tolist()
     return unique_values
 
-
+def invSummary():
+    
+    #Group by GTIN and LOT 
+    df_inv = df.groupby(['GTIN', 'Lot'])
+    sum = df_inv['QTY'].sum().reset_index()
+    sum['GTIN'] = sum['GTIN'].apply(get_part)
+    print(sum)
+    return sum
 
 @app.route('/')
 def home():
@@ -72,7 +100,9 @@ def home():
     keys = df['level'].unique().tolist()
     gtin_counts = calculate_gtin_counts(df)
     unique_gtins_per_level = {level: partsInLevel(level) for level in keys}
-    return render_template('index.html', keys=keys,gtin_counts=gtin_counts, time=data['time'], unique_gtins=unique_gtins_per_level)
+    sum = invSummary()
+    sum = sum.to_dict(orient ='records')
+    return render_template('index.html', keys=keys,gtin_counts=gtin_counts, time=data['time'], unique_gtins=unique_gtins_per_level, sum=sum)
 
 ##create a function to load the contents of each level when clicked 
 @app.route('/level/<int:level>')
