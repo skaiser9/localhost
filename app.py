@@ -88,7 +88,7 @@ def invSummary():
     df_inv = df.groupby(['GTIN', 'Lot'])
     sum = df_inv['QTY'].sum().reset_index()
     sum['GTIN'] = sum['GTIN'].apply(get_part)
-    print(sum)
+    sum = sum.drop(sum.index[0]) #Drop the 0 index row, it contains 0 values.
     return sum
 
 @app.route('/')

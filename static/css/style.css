@@ -50,3 +50,20 @@ td, th {
 .button:hover {
     background-color: #0056b3; /* Slightly darker blue on hover */
 }
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.table-container table:nth-child(2) {
+    width: fit-content;
+    max-width: 40%;
+}
+
+   /* Adjust cell padding */
+.table-container table:nth-child(2) td {
+    padding: 5px;
+    /* Reduce padding */
+}

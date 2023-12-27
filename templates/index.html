@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Frame Keys</title>
+    <title>GEA Inventory data</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         .header-container {
@@ -16,10 +16,11 @@
 </head>
 <body>
     <div class = "header-container">
-        <h1>Data Frame Keys</h1>
+        <h1>GEA</h1>
         <h2>Json data collected: {{ time }}</h2>
         <button> Search</button> <!--add logic for product searching-->
     </div>
+    <div class="table-container">
         <table>
         <tr>
             <th>Key Name</th>
@@ -56,5 +57,6 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
 </body>
 </html>
