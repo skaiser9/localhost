@@ -32,6 +32,7 @@ def loadDataFrame(data):
 data = load_Json() 
 
 df = loadDataFrame(data)
+
 def levelDetails(level):
     level = str(level)
     #print a dataframe with the details of the level 
@@ -39,6 +40,11 @@ def levelDetails(level):
     level_data = df_level.to_dict('records')
     
     return level_data
+
+def partsInLevel(level):
+    level = str(level)
+    df_level = df.loc[(df['level'] == level) & (df['GTIN'] != ""), 'GTIN'].unique().tolist()
+    return df_level 
 
 def calculate_gtin_counts(df):
     gtin_counts = {}
@@ -65,7 +71,8 @@ def home():
     #keys = df.columns.tolist() #change the keys variable to the new normalized df 
     keys = df['level'].unique().tolist()
     gtin_counts = calculate_gtin_counts(df)
-    return render_template('index.html', keys=keys,gtin_counts=gtin_counts, time=data['time'])
+    unique_gtins_per_level = {level: partsInLevel(level) for level in keys}
+    return render_template('index.html', keys=keys,gtin_counts=gtin_counts, time=data['time'], unique_gtins=unique_gtins_per_level)
 
 ##create a function to load the contents of each level when clicked 
 @app.route('/level/<int:level>')

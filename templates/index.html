@@ -10,14 +10,21 @@
     <table>
         <tr>
             <th>Key Name</th>
-            <th>Full shelfs</th>
+            <th>Full shelves</th>
+            <th>Parts in level</th>
         </tr>
         {% for key in keys %}
-         {% if key != 'time' %} <!--used to exlcude the time from the key list  -->
+         {% if key != 'time' %} <!--used to exclude the time from the key list  -->
         <tr>
-            <!--Link the level detials page-->
-            <td><a href="{{url_for('level_route', level=key)}}">Level:{{ key }}</td>
+            <!--Link the level details page-->
+            <td><a href="{{url_for('level_route', level=key)}}">Level:{{ key }}</a></td>
             <td>{{ gtin_counts[key] }}</td>
+            <td>
+                <!-- List the unique GTINs for each level -->
+                {% for gtin in unique_gtins[key] %}
+                    {{ gtin }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
         </tr>
         {% endif %}
         {% endfor %}
